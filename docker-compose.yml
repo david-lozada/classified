@@ -1,0 +1,47 @@
+services:
+  # FastAPI Backend
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGODB_URL=mongodb://mongodb:27017
+    depends_on:
+      - mongodb
+    volumes:
+      - ./backend/app:/app  # Hot reload for backend
+    restart: unless-stopped
+
+  # Quasar Frontend
+  frontend:
+    build: ./frontend
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
+      - ./frontend/quasar.config.js:/app/quasar.config.js
+      - ./frontend/package.json:/app/package.json
+      - ./frontend/index.html:/app/index.html
+      - ./frontend/.postcssrc.js:/app/.postcssrc.js
+      - ./frontend/.eslintrc.js:/app/.eslintrc.js
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    depends_on:
+      - backend
+    command: quasar dev # Start Quasar dev server
+    restart: unless-stopped
+
+  # MongoDB Database
+  mongodb:
+    image: mongo:4.4
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=fastapi_db
+    volumes:
+      - mongodb_data:/data/db
+    restart: unless-stopped
+
+volumes:
+  mongodb_data:

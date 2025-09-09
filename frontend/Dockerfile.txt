@@ -1,0 +1,32 @@
+# Frontend Dockerfile - Optimized version
+FROM node:18-bullseye
+
+WORKDIR /app
+
+# Copy package files first
+COPY package*.json ./
+
+# Install Quasar CLI globally
+RUN npm install -g @quasar/cli
+
+# Copy only necessary files for build
+COPY *.config.* ./
+COPY quasar.config.js ./
+COPY src/ ./src/
+COPY public/ ./public/
+
+# 1. Remove stale lock & modules
+RUN rm -rf package-lock.json node_modules
+
+# 2. Install explicitly for the target platform
+RUN npm install --platform=linux --arch=x64 --omit=optional --legacy-peer-deps
+
+RUN npm install --no-save @rollup/rollup-linux-x64-gnu
+
+RUN ls node_modules/@rollup/rollup-linux-x64-gnu/
+
+# 3. Now build
+RUN npm run build
+
+EXPOSE 9000
+CMD ["quasar", "dev"]

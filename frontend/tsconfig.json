@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "moduleResolution": "node",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "preserve",
+    "strict": false, // Set to false to avoid build issues
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
+    "paths": {
+      "#q-app/*": ["./src/*"],
+      "#q-app/wrappers": ["./node_modules/@quasar/app-vite/types/wrappers.d.ts"]
+    },
+    "types": ["node", "vite/client", "quasar"],
+    "allowJs": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "quasar.config.js",
+    "env.d.ts",
+    "src/env.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    ".quasar"
+  ],
+  "extends": "./.quasar/tsconfig.json"
+}

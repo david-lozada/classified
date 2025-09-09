@@ -1,0 +1,79 @@
+time="2025-09-03T23:03:38-04:00" level=warning msg="Docker Compose is configured to build using Bake, but buildkit isn't enabled"
+ Service frontend  Building
+Sending build context to Docker daemon  168.3kB
+Step 1/14 : FROM node:18-bullseye
+18-bullseye: Pulling from library/node
+
+[1A[2K54107f2de180: Already exists [1B
+[1A[2K06b6c820e694: Already exists [1B
+[1A[2K9a69a0203501: Already exists [1B
+[1A[2Ke94932625c5a: Already exists [1B
+[1A[2K7704b1a39512: Already exists [1B
+[1A[2K762aa0aa2e63: Already exists [1B
+[1A[2K8c1ed1def9d2: Already exists [1B
+[1A[2K9fa90b7e1816: Already exists [1BDigest: sha256:0d9e9a8dcd5a83ea737ed92227a6591a31ad70c8bb722b0c51aff7ae23a88b6a
+Status: Downloaded newer image for node:18-bullseye
+ ---> 31819134fee7
+Step 2/14 : WORKDIR /app
+ ---> Running in cc8ea89a092d
+ ---> Removed intermediate container cc8ea89a092d
+ ---> a092ebb90bea
+Step 3/14 : COPY package*.json ./
+ ---> 34c82788f57f
+Step 4/14 : RUN npm install -g @quasar/cli
+ ---> Running in 806a8c1863ee
+
+added 230 packages in 20s
+
+80 packages are looking for funding
+  run `npm fund` for details
+[91mnpm notice
+npm notice New major version of npm available! 10.8.2 -> 11.6.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.6.0
+npm notice To update run: npm install -g npm@11.6.0
+npm notice
+[0m ---> Removed intermediate container 806a8c1863ee
+ ---> 79413c4743a2
+Step 5/14 : COPY *.config.* ./
+ ---> fc617648b24a
+Step 6/14 : COPY quasar.config.js ./
+ ---> 4840b110761b
+Step 7/14 : COPY src/ ./src/
+ ---> 95a8f14f840e
+Step 8/14 : COPY public/ ./public/
+ ---> 6b7336910764
+Step 9/14 : RUN rm -rf package-lock.json node_modules
+ ---> Running in a2f018c52837
+ ---> Removed intermediate container a2f018c52837
+ ---> 8387799e57e7
+Step 10/14 : RUN npm ci --no-optional --legacy-peer-deps
+ ---> Running in b89867e1a445
+[91mnpm warn config optional Use `--omit=optional` to exclude optional dependencies, or
+npm warn config `--include=optional` to include them.
+npm warn config
+npm warn config       Default value does install optional deps unless otherwise omitted.
+[0m[91mnpm error code EUSAGE
+[0m[91mnpm error
+npm error The `npm ci` command can only install with an existing package-lock.json or
+npm error npm-shrinkwrap.json with lockfileVersion >= 1. Run an install with npm@5 or
+npm error later to generate a package-lock.json file, then try again.
+npm error
+npm error Clean install a project
+npm error
+npm error Usage:
+npm error npm ci
+npm error
+npm error Options:
+npm error [--install-strategy <hoisted|nested|shallow|linked>] [--legacy-bundling]
+npm error [--global-style] [--omit <dev|optional|peer> [--omit <dev|optional|peer> ...]]
+npm error [--include <prod|dev|optional|peer> [--include <prod|dev|optional|peer> ...]]
+npm error [--strict-peer-deps] [--foreground-scripts] [--ignore-scripts] [--no-audit]
+npm error [--no-bin-links] [--no-fund] [--dry-run]
+npm error [-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]
+npm error [-ws|--workspaces] [--include-workspace-root] [--install-links]
+npm error
+npm error aliases: clean-install, ic, install-clean, isntall-clean
+npm error
+npm error Run "npm help ci" for more info
+[0m[91mnpm error A complete log of this run can be found in: /root/.npm/_logs/2025-09-04T03_05_07_620Z-debug-0.log
+[0mThe command '/bin/sh -c npm ci --no-optional --legacy-peer-deps' returned a non-zero code: 1
