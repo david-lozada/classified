@@ -1,1 +1,93 @@
-/* app global css */
+/* src/css/fonts.css */
+@font-face {
+  font-family: 'Ranade';
+  src: url('../fonts/Ranade.woff2') format('woff2');
+  font-weight: 100 900; /* Weight range */
+  font-stretch: 75% 125%; /* Width range - if supported */
+  font-style: normal;
+  font-display: swap;
+  font-named-instance: 'Regular';
+}
+
+/* Optional: If your font has italic variants */
+@font-face {
+  font-family: 'Ranade Italic';
+  src: url('../fonts/Ranade-Italic.woff2') format('woff2');
+  font-weight: 100 900;
+  font-stretch: 75% 125%;
+  font-style: italic;
+  font-display: swap;
+  font-named-instance: 'Italic';
+}
+
+/* src/css/font-utilities.css */
+/* Weight utilities */
+.font-thin {
+  font-variation-settings: 'wght' 100;
+  font-weight: 100;
+}
+
+.font-extralight {
+  font-variation-settings: 'wght' 200;
+  font-weight: 200;
+}
+
+.font-light {
+  font-variation-settings: 'wght' 300;
+  font-weight: 300;
+}
+
+.font-regular {
+  font-variation-settings: 'wght' 400;
+  font-weight: 400;
+}
+
+.font-medium {
+  font-variation-settings: 'wght' 500;
+  font-weight: 500;
+}
+
+.font-semibold {
+  font-variation-settings: 'wght' 600;
+  font-weight: 600;
+}
+
+.font-bold {
+  font-variation-settings: 'wght' 700;
+  font-weight: 700;
+}
+
+.font-extrabold {
+  font-variation-settings: 'wght' 800;
+  font-weight: 800;
+}
+
+.font-black {
+  font-variation-settings: 'wght' 900;
+  font-weight: 900;
+}
+
+/* Width utilities (if supported) */
+.font-condensed {
+  font-stretch: condensed;
+  font-variation-settings: 'wdth' 87.5;
+}
+
+.font-expanded {
+  font-stretch: expanded;
+  font-variation-settings: 'wdth' 112.5;
+}
+
+/* Italic utility */
+.font-italic {
+  font-style: italic;
+}
+
+/* Optical size utilities (if supported) */
+.font-optical-small {
+  font-variation-settings: 'opsz' 12;
+}
+
+.font-optical-large {
+  font-variation-settings: 'opsz' 48;
+}
