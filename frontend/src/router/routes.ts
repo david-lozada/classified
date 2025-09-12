@@ -7,11 +7,11 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/login',
-    component: () => import('../modules/auth/LoginPage.vue'),
+    component: () => import('../modules/auth/pages/LoginPage.vue'),
   },
   {
     path: '/signup',
-    component: () => import('../modules/auth/SignupPage.vue'),
+    component: () => import('../modules/auth/pages/SignupPage.vue'),
   },
   {
     path: '/dashboard',

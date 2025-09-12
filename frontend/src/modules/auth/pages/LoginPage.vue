@@ -6,19 +6,14 @@
           <div class="q-pa-lg col-12 col-md-5 col-lg-5">
             <div class="bg-primary text-dark q-pa-md full-height rounded-borders">
               <div class="q-pa-lg">
-                <q-btn
-                  round
-                  color="dark"
-                  size="md"
-                  icon="arrow_left"
-                />
+                <ButtonBack />
               </div>
               <div class="text-center">
                 <h4 class="font-regular">Ingresa</h4>
               </div>
               <div class="q-pa-lg">
                 <q-form
-                  @submit="onSubmit"
+                  @submit.prevent="handleSubmit"
                   @reset="onReset"
                   class="q-gutter-md"
                 >
@@ -27,12 +22,20 @@
                     outlined 
                     v-model="email" 
                     label="Correo" 
+                    lazy-rules
+                    :rules="[ val => val && val.length > 0 || 'Please type something']"
                   />
-                  <q-input v-model="password" filled type="password" hint="Password" />
+                  <q-input 
+                    outlined 
+                    v-model="password" 
+                    label="Contraseña" 
+                    type="password" 
+                    lazy-rules
+                    :rules="[ val => val && val.length > 0 || 'Please type something']"
+                  />
 
-                  <div>
-                    <q-btn label="Submit" type="submit" color="primary"/>
-                    <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
+                  <div class="row">
+                    <q-btn class="col-8 justify-center" label="Submit" type="submit" size="md" color="secondary"/>
                   </div>
                 </q-form>
               </div>
@@ -41,7 +44,7 @@
           <div class="col-12 col-md-7 col-lg-7 relative">
             <div class="row items-center justify-end">
               <div class="col-12">
-                <img src="../../assets/math.svg" alt="Mathematics" class="">
+                <img src="../../../assets/math.svg" alt="Mathematics" class="">
               </div>
               <div class="absolute inset-y-0 right-0 flex items-center">
                 <div class="text-white q-pa-lg text-right">
@@ -60,33 +63,37 @@
 <script lang="ts">
 import { useQuasar } from 'quasar'
 import { ref } from 'vue'
+import ButtonBack from 'src/modules/core/utils/ButtonBack.vue'
+
 
 export default {
-  setup () {
+  components: {
+    ButtonBack
+  },
+  setup() {
     const $q = useQuasar()
+    const email = ref('')
+    const password = ref('')
 
-    const email = ref<string>("")
-    const password = ref<string>("")
+    const handleSubmit = () => {
+      console.log('Submitted', { email: email.value, password: password.value })
+    }
 
+    const onReset = () => {
+      email.value = ''
+      password.value = ''
+      $q.notify({
+        type: 'info',
+        message: 'Formulario reiniciado',
+        position: 'top'
+      })
+    }
 
-    return {
+    return { 
       email,
       password,
-      onSubmit() {
-        $q.notify({
-          type: 'positive',
-          message: `Submitted: ${email.value}, ${password.value}`
-        })
-      },
-      onReset() {
-        email.value = ""
-        password.value = ""
-        $q.notify({
-          type: 'info',
-          message: 'Form reset'
-        })
-      }
-
+      handleSubmit,
+      onReset
     }
   }
 }

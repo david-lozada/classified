@@ -1,33 +1,33 @@
-# Frontend Dockerfile - Fixed version
 FROM node:18-bullseye
+
+# Enable corepack for pnpm
+RUN corepack enable
+RUN corepack prepare pnpm@latest --activate
+ENV PNPM_HOME=/usr/local/bin
+ENV PATH="$PNPM_HOME:$PATH"
 
 WORKDIR /app
 
-# Copy package files first
+# Copy only package files first
 COPY package*.json ./
+COPY pnpm-lock.yaml ./
 
-# Install Quasar CLI globally
-RUN npm install -g @quasar/cli
-
-# Debug: Show what files are available in the build context
-RUN echo "Files in current directory before copying:" && ls -la
-
-# Copy only necessary files for build
-COPY . ./
-
-# 1. Remove stale lock & modules
-RUN rm -rf package-lock.json node_modules
-
-# 2. Force install with legacy peer deps to resolve conflicts
-RUN npm install --platform=linux --arch=x64 --omit=optional --legacy-peer-deps --force
+# Install Quasar CLI
+RUN pnpm add -g @quasar/cli
 
 # 3. Install rollup specifically for the platform
-RUN npm install --no-save @rollup/rollup-linux-x64-gnu --legacy-peer-deps
+RUN pnpm install
 
-RUN ls node_modules/@rollup/rollup-linux-x64-gnu/
 
-# 4. Now build
-RUN npm run build
+# Copy source files AFTER dependencies are installed
+COPY src/ ./src/
+COPY public/ ./public/
+COPY *.config.* ./
+COPY quasar.config.js ./
+COPY index.html ./
+
+# Build the app
+RUN pnpm run build
 
 EXPOSE 9000
 CMD ["quasar", "dev"]
